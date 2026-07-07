@@ -1,12 +1,6 @@
 from sentence_transformers import SentenceTransformer
+from ..config import settings
 
-model = None
-
-def get_model():
-    global model
-    if model is None:
-        model = SentenceTransformer("all-MiniLM-L6-v2")
-    return model
-
+model = SentenceTransformer("all-MiniLM-L6-v2")
 def get_embeddings(texts):
-    return get_model().encode(texts)
+    return model.encode(texts)
