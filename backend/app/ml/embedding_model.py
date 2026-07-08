@@ -5,9 +5,14 @@ _model = None
 
 def get_model():
     global _model
+
     if _model is None:
+        print("Loading AI model...")
         _model = SentenceTransformer(settings.MODEL_NAME)
+
     return _model
 
+
 def get_embeddings(texts):
-    return get_model().encode(texts)
+    model = get_model()
+    return model.encode(texts)
