@@ -8,3 +8,6 @@ docx2txt
 python-multipart
 pydantic
 psycopg2-binary
+huggingface_hub
+requests
+numpy

@@ -1,18 +1,23 @@
-from sentence_transformers import SentenceTransformer
-from ..config import settings
+import os
+import requests
 
-_model = None
+API_URL = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
 
-def get_model():
-    global _model
+HF_TOKEN = os.getenv("HF_TOKEN")
 
-    if _model is None:
-        print("Loading AI model...")
-        _model = SentenceTransformer(settings.MODEL_NAME)
-
-    return _model
+headers = {
+    "Authorization": f"Bearer {HF_TOKEN}"
+}
 
 
 def get_embeddings(texts):
-    model = get_model()
-    return model.encode(texts)
+    response = requests.post(
+        API_URL,
+        headers=headers,
+        json={"inputs": texts},
+        timeout=60
+    )
+
+    response.raise_for_status()
+
+    return response.json()
